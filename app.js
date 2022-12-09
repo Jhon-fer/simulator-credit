@@ -58,10 +58,10 @@ const Data = () => {
   const inputAge = document.createElement('input')
   inputAge.classList = 'section-question__container-info-age--input'
   inputAge.type = 'date'
-  const dateNow  = new Date()
+  // const dateNow  = new Date()
   inputAge.placeholder = 'dd/mm/aaaa'
-  inputAge.min = '1938-11-23'
-  inputAge.max = dateNow
+  inputAge.min = '1938-12-31'
+  inputAge.max = '2023-12-31'
 
   const paragraphAge = document.createElement('p')
   paragraphAge.classList = 'section-question__container-info-age--paragraph'
@@ -84,7 +84,6 @@ const Data = () => {
   h2.append(textH2)
 
   buttonSimulation.addEventListener('click', () => {
-    
     const validateAmount = () => {
       const inputAmountValue = inputAmount.value
 
@@ -97,7 +96,8 @@ const Data = () => {
           paragraph.style.color = 'red'
         }
       } else {
-        alert('ingresa un monto')
+        paragraph.textContent = 'Ingresa el monto que necesitas.'
+        paragraph.style.color = 'red'
       }
     }
     validateAmount()
@@ -114,7 +114,8 @@ const Data = () => {
           paragraphDate.style.color = 'red'
         }
       } else {
-        alert('ingresa el plazo')
+        paragraphDate.textContent = 'Ingresa el plazo que deseas.'
+        paragraphDate.style.color = 'red'
       }
     } 
     validateDate()
@@ -130,19 +131,22 @@ const Data = () => {
       const monthUser = parseInt(date.split('-')[1])
       const dateUser = parseInt(date.split('-')[2])
 
-      const validate = year - yearUser
+      const transformYearUser = yearUser * 365 + monthUser * 30 + dateUser
+      const transformYearActuall = year * 365 + month * 30 + day 
+      const validate = (transformYearActuall - transformYearUser) / 365
      
-      if (validate >= 18) {
-        if (monthUser >= month) {
-          if (dateUser >= day) {
-            console.log('eres mayor de edad')
-          } else {
-            console.log('eres un niño')
-          }
+      if (date) {
+        if (validate >= 18 && validate <= 84) {
+          paragraphAge.textContent = 'Debes tener entre 18 y 84 años para solicitar el crédito.'
+          paragraphAge.style.color = 'black'
+        } else {
+          paragraphAge.textContent = 'Debes tener entre 18 y 84 años para solicitar el crédito.'
+          paragraphAge.style.color = 'red'
         }
+      } else {
+        paragraphAge.textContent = 'Ingresa tu fecha de nacimiento.'
+        paragraphAge.style.color = 'red'
       }
-
-      console.log('edad: ' + validate)
     }
     validateAge()
   })
