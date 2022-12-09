@@ -121,12 +121,28 @@ const Data = () => {
 
     const validateAge = () => {
       const date = document.querySelector('.section-question__container-info-age--input').value
-      const actual = date.split('/')
       const newDate = new Date()
-      const month = (newDate.getMonth() + 1).toString()
-      console.log(date)
-      console.log(month)
-      console.log('split ' + actual)
+      const year = (newDate.getFullYear())
+      const month = (newDate.getMonth() + 1)
+      const day = (newDate.getDate())
+
+      const yearUser = parseInt(date.split('-')[0])
+      const monthUser = parseInt(date.split('-')[1])
+      const dateUser = parseInt(date.split('-')[2])
+
+      const validate = year - yearUser
+     
+      if (validate >= 18) {
+        if (monthUser >= month) {
+          if (dateUser >= day) {
+            console.log('eres mayor de edad')
+          } else {
+            console.log('eres un niño')
+          }
+        }
+      }
+
+      console.log('edad: ' + validate)
     }
     validateAge()
   })
